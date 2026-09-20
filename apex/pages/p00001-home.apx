@@ -1,5 +1,5 @@
 page 1 (
-    name: Home
+    name: Dashboard
     alias: HOME
     title: APEX Dev Tracker
     appearance {
