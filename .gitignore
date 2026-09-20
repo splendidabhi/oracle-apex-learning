@@ -1,0 +1,35 @@
+# --------------------------------
+# Credentials / Secrets
+# --------------------------------
+.env
+.env.*
+*.key
+*.pem
+credentials.json
+secrets.json
+
+# --------------------------------
+# VS Code local settings
+# --------------------------------
+.vscode/
+
+# --------------------------------
+# Operating system files
+# --------------------------------
+.DS_Store
+Thumbs.db
+
+# --------------------------------
+# Temporary / backup files
+# --------------------------------
+*.tmp
+*.temp
+*.bak
+*.log
+*~
+
+# --------------------------------
+# Oracle generated / temporary
+# --------------------------------
+*.dmp
+*.dump
