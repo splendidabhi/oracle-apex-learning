@@ -77,5 +77,27 @@ list navigation-menu (
         }
     )
 
+    entry projects (
+        label: Projects
+        icon {
+            imageIconCssClasses: fa-table
+        }
+        layout {
+            sequence: 20
+        }
+        isCurrent {
+            type: pages
+            pages: [
+                2
+                3
+            ]
+        }
+        link {
+            target: {
+                page: 2
+            }
+        }
+    )
+
 )
 
