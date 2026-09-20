@@ -1,0 +1,18 @@
+genAIService ai-bootcamp (
+    name: AI_BOOTCAMP
+    provider: openai
+    endpointUrl {
+        url: https://api.openai.com/v1
+    }
+    authentication {
+        credentials: @credentials-for-ai-bootcamp
+    }
+    appBuilder {
+        usedByAppBuilder: true
+        defaultForNewApps: true
+    }
+    advanced {
+        modelName: gpt-5.4-nano
+    }
+)
+
