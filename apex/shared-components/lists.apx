@@ -99,5 +99,27 @@ list navigation-menu (
         }
     )
 
+    entry tasks (
+        label: Tasks
+        icon {
+            imageIconCssClasses: fa-table
+        }
+        layout {
+            sequence: 30
+        }
+        isCurrent {
+            type: pages
+            pages: [
+                4
+                5
+            ]
+        }
+        link {
+            target: {
+                page: 4
+            }
+        }
+    )
+
 )
 

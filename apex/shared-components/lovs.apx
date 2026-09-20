@@ -18,3 +18,78 @@ lov boolean (
 
 )
 
+lov task-projects (
+    name: TASK_PROJECTS
+    source {
+        location: localDatabase
+        type: sqlQuery
+        sqlQuery:
+            ```sql
+            select project_name, project_id
+              from xxdt_projects
+            ```
+    }
+    columnMapping {
+        return: PROJECT_ID
+        display: PROJECT_NAME
+        defaultSort: PROJECT_NAME
+        sortDirection: ascNullsLast
+    }
+)
+
+lov task-statuses (
+    name: TASK_STATUSES
+    source {
+        location: staticValues
+    }
+
+    entry todo (
+        sequence: 1
+        display: TODO
+        return: TODO
+    )
+
+    entry in-progress (
+        sequence: 2
+        display: IN PROGRESS
+        return: IN PROGRESS
+    )
+
+    entry completed (
+        sequence: 3
+        display: COMPLETED
+        return: COMPLETED
+    )
+
+    entry cancelled (
+        sequence: 4
+        display: CANCELLED
+        return: CANCELLED
+    )
+)
+
+lov task-priorities (
+    name: TASK_PRIORITIES
+    source {
+        location: staticValues
+    }
+
+    entry low (
+        sequence: 1
+        display: LOW
+        return: LOW
+    )
+
+    entry medium (
+        sequence: 2
+        display: MEDIUM
+        return: MEDIUM
+    )
+
+    entry high (
+        sequence: 3
+        display: HIGH
+        return: HIGH
+    )
+)
+
