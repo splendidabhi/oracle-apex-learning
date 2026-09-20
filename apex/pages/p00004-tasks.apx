@@ -1,0 +1,234 @@
+page 4 (
+    name: Tasks
+    alias: TASKS
+    title: Tasks
+    appearance {
+        pageTemplate: @/standard
+        templateOptions: #DEFAULT#
+    }
+    navigation {
+        cursorFocus: doNotFocusCursor
+    }
+    security {
+        pageAccessProtection: argumentsMustHaveChecksum
+        formAutoComplete: false
+    }
+
+    help {
+        helpText: Search and filter tasks by project, status, priority, or due date. Select Edit to update a task, or Create to add a task to an existing project.
+    }
+
+    region tasks (
+        name: Tasks
+        type: interactiveReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```sql
+                select t.task_id,
+                       t.task_name,
+                       p.project_name,
+                       t.status,
+                       t.priority,
+                       t.due_date
+                  from xxdt_tasks t
+                  join xxdt_projects p on p.project_id = t.project_id
+                ```
+        }
+        layout {
+            sequence: 10
+            slot: body
+        }
+        appearance {
+            template: @/interactive-report
+            templateOptions: [
+                #DEFAULT#
+                t-IRR-region--hideHeader js-addHiddenHeadingRoleDesc
+            ]
+        }
+        link {
+            linkColumn: customTarget
+            target: {
+                page: 5
+                items: {
+                    P5_TASK_ID: \#TASK_ID#\
+                }
+                clearCache: 5
+                action: resetPagination
+            }
+            linkIcon: <span role="img" aria-label="Edit" class="fa fa-edit" title="Edit"></span>
+        }
+        pagination {
+            type: rowRangesXToY
+        }
+        messages {
+            whenNoDataFound: No tasks found. Use Create to add a task or adjust your filters.
+            whenMoreDataFound: The maximum row count for this report is #MAX_ROW_COUNT# rows.  Please apply a filter to reduce the number of records in your query.
+        }
+
+        column TASK_ID (
+            type: hidden
+            heading {
+                heading: Task ID
+            }
+            layout {
+                sequence: 0
+            }
+            source {
+                dataType: NUMBER
+            }
+            comments {
+                comments: Hidden task primary key passed to Page 5 for editing.
+            }
+        )
+
+        column TASK_NAME (
+            type: plainText
+            heading {
+                heading: Task Name
+            }
+            layout {
+                sequence: 1
+            }
+            source {
+                dataType: STRING
+            }
+            security {
+                escapeSpecialChars: true
+            }
+            comments {
+                comments: Task title stored in XXDT_TASKS.TASK_NAME.
+            }
+        )
+
+        column PROJECT_NAME (
+            type: plainText
+            heading {
+                heading: Project Name
+            }
+            layout {
+                sequence: 2
+            }
+            source {
+                dataType: STRING
+            }
+            security {
+                escapeSpecialChars: true
+            }
+            comments {
+                comments: Project name joined through XXDT_TASKS.PROJECT_ID.
+            }
+        )
+
+        column STATUS (
+            type: plainText
+            heading {
+                heading: Status
+            }
+            layout {
+                sequence: 3
+            }
+            source {
+                dataType: STRING
+            }
+            security {
+                escapeSpecialChars: true
+            }
+            comments {
+                comments: Task lifecycle status from XXDT_TASKS.STATUS.
+            }
+        )
+
+        column PRIORITY (
+            type: plainText
+            heading {
+                heading: Priority
+            }
+            layout {
+                sequence: 4
+            }
+            source {
+                dataType: STRING
+            }
+            security {
+                escapeSpecialChars: true
+            }
+            comments {
+                comments: Task priority from XXDT_TASKS.PRIORITY.
+            }
+        )
+
+        column DUE_DATE (
+            type: plainText
+            heading {
+                heading: Due Date
+            }
+            layout {
+                sequence: 5
+            }
+            source {
+                dataType: DATE
+            }
+            security {
+                escapeSpecialChars: true
+            }
+            comments {
+                comments: Optional task due date from XXDT_TASKS.DUE_DATE.
+            }
+        )
+
+        savedReport primary (
+            visibility: primaryDefault
+            view {
+                rowsPerPage: 50
+            }
+            displayColumn TASK_NAME (
+                sequence: 1
+            )
+            displayColumn PROJECT_NAME (
+                sequence: 2
+            )
+            displayColumn STATUS (
+                sequence: 3
+            )
+            displayColumn PRIORITY (
+                sequence: 4
+            )
+            displayColumn DUE_DATE (
+                sequence: 5
+            )
+        )
+
+        page {
+            borderWidth: 0.5
+            borderColor: #666666
+        }
+
+    )
+
+    button create (
+        buttonName: CREATE
+        label: Create
+        layout {
+            sequence: 10
+            region: @tasks
+            slot: rightOfInteractiveReportSearchBar
+        }
+        appearance {
+            buttonTemplate: @/text
+            hot: true
+            templateOptions: #DEFAULT#
+        }
+        behavior {
+            action: redirectThisApp
+            target: {
+                page: 5
+                clearCache: 5
+            }
+            warnOnUnsavedChanges: doNotCheck
+        }
+    )
+
+)
+
