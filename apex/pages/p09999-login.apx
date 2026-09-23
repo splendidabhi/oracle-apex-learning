@@ -4,7 +4,204 @@ page 9999 (
     title: APEX Dev Tracker - Log In
     appearance {
         pageTemplate: @/login
+        cssClasses: dt-login-page
         templateOptions: #DEFAULT#
+    }
+    css {
+        inline:
+            ```
+            /* Page 9999 only. Keep native Universal Theme login controls and submission. */
+            body.dt-login-page {
+                --dt-text: #edf5ff;
+                --dt-muted: #b7cce2;
+                --dt-border: rgba(149, 196, 239, .24);
+                color-scheme: dark;
+                color: var(--dt-text);
+                min-height: 100vh;
+                min-height: 100svh;
+                margin: 0;
+                background: radial-gradient(ellipse at 88% 4%, #164f80 0%, transparent 44%),
+                            radial-gradient(ellipse at 8% 88%, #10384f 0%, transparent 48%), #061526;
+            }
+            body.dt-login-page .t-Login-bg { background: transparent; }
+            body.dt-login-page .t-Login-container {
+                box-sizing: border-box;
+                display: grid;
+                grid-template-columns: minmax(0, 1.15fr) minmax(320px, .85fr);
+                align-items: center;
+                gap: clamp(28px, 4vw, 64px);
+                width: min(1240px, 100%);
+                max-width: 1240px;
+                min-height: 100vh;
+                min-height: 100svh;
+                padding: 36px clamp(28px, 4vw, 56px);
+                margin: 0 auto;
+            }
+            /* APEX wraps contentBody regions in container/row/column elements.
+               Flatten only the outer layout wrappers, never the form's own grid. */
+            body.dt-login-page .t-Login-container :is(.t-Login-containerBody, .container, .row, .col):has(.dt-login-visual, .t-Login-region) {
+                display: contents;
+            }
+            body.dt-login-page .t-Login-container > :is(.t-Login-containerHeader, .t-Login-containerFooter) { grid-column: 1 / -1; }
+            body.dt-login-page .t-Login-container > :is(.t-Login-containerHeader, .t-Login-containerFooter):empty { display: none; }
+            body.dt-login-page .t-Login-container > .t-Alert { grid-column: 1 / -1; }
+            body.dt-login-page .dt-login-visual {
+                grid-column: 1;
+                min-width: 0;
+                margin: 0;
+                background: transparent;
+                border: 0;
+                box-shadow: none;
+            }
+            body.dt-login-page .dt-visual { position: relative; padding: 0; }
+            body.dt-login-page .dt-eyebrow {
+                margin: 0 0 18px;
+                color: #7dbcf0;
+                font-size: 12px;
+                font-weight: 700;
+                letter-spacing: .18em;
+                text-transform: uppercase;
+            }
+            body.dt-login-page .dt-visual-title {
+                margin: 0;
+                max-width: 460px;
+                color: #edf5ff;
+                font-size: clamp(30px, 3.1vw, 44px);
+                line-height: 1.16;
+                font-weight: 650;
+                letter-spacing: -.035em;
+            }
+            body.dt-login-page .dt-visual-copy {
+                max-width: 370px;
+                margin: 18px 0 24px;
+                color: var(--dt-muted);
+                font-size: 16px;
+                line-height: 1.7;
+            }
+            /* Decorative illustrations contain no live project or task data. */
+            body.dt-login-page .dt-dashboard {
+                position: relative;
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 14px;
+                max-width: 460px;
+                padding: 16px;
+                border: 1px solid rgba(113, 176, 231, .15);
+                border-radius: 24px;
+                background: radial-gradient(rgba(98, 168, 226, .1) 1px, transparent 1px) 0 0 / 16px 16px;
+            }
+            body.dt-login-page .dt-tile {
+                min-width: 0;
+                padding: 16px;
+                border: 1px solid rgba(114, 179, 234, .22);
+                border-radius: 14px;
+                background: linear-gradient(140deg, rgba(26, 66, 103, .76), rgba(8, 30, 52, .88));
+                box-shadow: 0 12px 28px rgba(0, 5, 17, .16);
+            }
+            body.dt-login-page .dt-tile-mark {
+                display: inline-grid;
+                place-items: center;
+                width: 32px;
+                height: 32px;
+                margin-bottom: 14px;
+                border-radius: 9px;
+                color: #86c9ff;
+                background: rgba(67, 150, 242, .15);
+                font-size: 20px;
+            }
+            body.dt-login-page .dt-tile strong { display: block; color: #d4e7f9; font-size: 15px; font-weight: 600; }
+            body.dt-login-page .dt-tile small { display: block; margin-top: 5px; color: #9db9d2; font-size: 12px; }
+            body.dt-login-page .dt-meter { height: 4px; margin-top: 18px; border-radius: 8px; background: #173c5a; }
+            body.dt-login-page .dt-meter::before { content: ''; display: block; width: 62%; height: 100%; border-radius: inherit; background: #3a94e7; }
+            body.dt-login-page .dt-tile:nth-child(2) .dt-meter::before { width: 76%; background: #25a7b5; }
+            body.dt-login-page .dt-tile:nth-child(3) .dt-meter::before { width: 52%; background: #788bea; }
+            body.dt-login-page .dt-tile:nth-child(4) .dt-meter::before { width: 85%; background: #4daff0; }
+            body.dt-login-page .t-Login-region {
+                grid-column: 2;
+                box-sizing: border-box;
+                width: 100%;
+                min-width: 0;
+                max-width: 460px;
+                margin: 0;
+                justify-self: end;
+                padding: clamp(24px, 2.6vw, 36px);
+                border: 1px solid var(--dt-border);
+                border-radius: 24px;
+                color: var(--dt-text);
+                background: rgba(12, 36, 59, .95);
+                box-shadow: 0 28px 80px rgba(0, 7, 20, .38), inset 0 1px 0 rgba(210, 233, 255, .08);
+            }
+            @supports (backdrop-filter: blur(20px)) {
+                body.dt-login-page .t-Login-region { background: rgba(18, 45, 71, .67); backdrop-filter: blur(20px); }
+            }
+            body.dt-login-page .t-Login-region .t-Login-header { padding: 0 0 12px; }
+            body.dt-login-page .t-Login-region .t-Login-logo { width: 56px; height: 56px; margin: 0 auto 16px; }
+            body.dt-login-page .t-Login-region .t-Login-title { color: var(--dt-text); font-size: clamp(25px, 2.5vw, 32px); line-height: 1.25; letter-spacing: -.025em; }
+            body.dt-login-page .dt-login-subtitle { margin: 0 0 28px; color: var(--dt-muted); text-align: center; font-size: 15px; line-height: 1.6; }
+            body.dt-login-page .t-Login-region .t-Login-body { display: flex; flex-direction: column; padding: 0; }
+            body.dt-login-page .t-Login-region .dt-login-subtitle { order: -1; }
+            body.dt-login-page .t-Login-region .t-Login-body > .container { width: 100%; min-width: 0; }
+            body.dt-login-page .t-Login-region .apex-item-group--password { min-width: 0; }
+            body.dt-login-page .t-Login-region .apex-item-group--password input { min-width: 0; }
+            body.dt-login-page .t-Login-region .apex-item-group--password .a-Button {
+                background: #163650; color: #d7e9fa; border-color: rgba(167, 198, 226, .35);
+            }
+            body.dt-login-page .t-Login-region input:-webkit-autofill {
+                -webkit-text-fill-color: #f1f6fd;
+                -webkit-box-shadow: 0 0 0 1000px #102b44 inset;
+                caret-color: #f1f6fd;
+            }
+            body.dt-login-page .t-Login-region .t-Form-fieldContainer { padding: 0; margin-bottom: 16px; }
+            body.dt-login-page #P9999_USERNAME,
+            body.dt-login-page #P9999_PASSWORD {
+                box-sizing: border-box;
+                width: 100%;
+                max-width: 100%;
+                min-height: 52px;
+                border: 1px solid rgba(167, 198, 226, .35);
+                border-radius: 10px;
+                background: rgba(7, 25, 44, .48);
+                color: #f1f6fd;
+                font-size: 16px;
+                box-shadow: inset 0 1px 2px rgba(0, 0, 0, .12);
+            }
+            body.dt-login-page #P9999_USERNAME::placeholder,
+            body.dt-login-page #P9999_PASSWORD::placeholder { color: #b5c6d8; opacity: 1; }
+            body.dt-login-page #P9999_USERNAME:focus,
+            body.dt-login-page #P9999_PASSWORD:focus { outline: 2px solid #7ebeff; outline-offset: 2px; border-color: #7ebeff; }
+            body.dt-login-page .t-Login-region .apex-item-icon { color: #b5cce3; }
+            body.dt-login-page .t-Login-region :is(.apex-item-option label, .u-checkbox, .t-Form-label) { color: #d5e4f3; }
+            body.dt-login-page .t-Login-region .t-Login-buttons { padding: 12px 0 0; }
+            body.dt-login-page .t-Login-region .t-Login-buttons .t-Button {
+                width: 100%;
+                min-height: 52px;
+                border: 1px solid #449efa;
+                border-radius: 10px;
+                color: #fff;
+                background: linear-gradient(180deg, #187fe4, #0863c4);
+                box-shadow: 0 8px 20px rgba(0, 73, 164, .22);
+                font-size: 16px;
+                font-weight: 600;
+                text-shadow: none;
+            }
+            body.dt-login-page .t-Login-region .t-Button--hot:hover { background: #096acb; }
+            body.dt-login-page .t-Login-region .t-Button:focus-visible { outline: 3px solid #9bceff; outline-offset: 4px; }
+            body.dt-login-page .t-Login-region .t-Form-error { color: #ffd1d1; }
+            body.dt-login-page .dt-login-tagline { margin: 18px 0 0; padding-top: 16px; border-top: 1px solid var(--dt-border); text-align: center; color: #b7cce2; font-size: 12px; letter-spacing: .04em; line-height: 1.8; }
+            @media (max-width: 820px) {
+                body.dt-login-page .t-Login-container { grid-template-columns: minmax(0, 1fr); gap: 0; padding: 28px 20px; }
+                body.dt-login-page .dt-login-visual { display: none; }
+                body.dt-login-page .t-Login-region { grid-column: 1; justify-self: center; }
+            }
+            @media (max-width: 420px) {
+                body.dt-login-page .t-Login-container { padding: 20px 12px; }
+                body.dt-login-page .t-Login-region { padding: 26px 20px; border-radius: 18px; }
+            }
+            @media (forced-colors: active) {
+                body.dt-login-page .t-Login-region { border: 1px solid CanvasText; }
+                body.dt-login-page .t-Login-region .t-Button--hot { border: 1px solid ButtonText; }
+            }
+            ```
     }
     navigation {
         warnOnUnsavedChanges: false
@@ -15,9 +212,51 @@ page 9999 (
         formAutoComplete: false
     }
 
+    region login-visual (
+        name: Project workspace illustration
+        type: staticContent
+        source {
+            htmlCode:
+                ```
+                <div class="dt-visual" aria-hidden="true">
+                    <p class="dt-eyebrow">APEX Dev Tracker</p>
+                    <p class="dt-visual-title">Clarity for every project.<br>Momentum for every team.</p>
+                    <p class="dt-visual-copy">Bring your projects, tasks, and next steps together in one focused workspace.</p>
+                    <div class="dt-dashboard">
+                        <div class="dt-tile"><span class="dt-tile-mark">&#9636;</span><strong>Projects</strong><small>Plan and organize</small><div class="dt-meter"></div></div>
+                        <div class="dt-tile"><span class="dt-tile-mark">&#10003;</span><strong>Tasks</strong><small>Track and complete</small><div class="dt-meter"></div></div>
+                        <div class="dt-tile"><span class="dt-tile-mark">&#9678;</span><strong>Team</strong><small>Work together</small><div class="dt-meter"></div></div>
+                        <div class="dt-tile"><span class="dt-tile-mark">&#8599;</span><strong>Progress</strong><small>Keep moving forward</small><div class="dt-meter"></div></div>
+                    </div>
+                </div>
+                ```
+        }
+        layout {
+            sequence: 5
+            slot: contentBody
+        }
+        appearance {
+            template: @/blank-with-attributes
+            cssClasses: dt-login-visual
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: dt-login-visual
+        }
+    )
+
     region apex-dev-tracker (
         name: APEX Dev Tracker
         type: staticContent
+        source {
+            htmlCode: <p class="dt-login-subtitle">Manage projects and tasks in one place</p>
+        }
+        advanced {
+            htmlDomId: dt-login-card
+        }
+        headerAndFooter {
+            footerText: <p class="dt-login-tagline">Plan &middot; Track &middot; Collaborate &middot; Deliver</p>
+        }
         layout {
             sequence: 10
             slot: contentBody
